@@ -3,12 +3,28 @@
 ## Practice Exercises
 
 - **1.** Faça uma função chamada *describe_number* que retorna o nome em string de um número até 5. Retorne "Outro" para números maiores que 6.
-- **2.** Faça uma função que retorna a quantidade de elementos de uma lista
-- **3.** Faça uma função que retorna o maior elemento de uma lista
-- **4.** Faça uma função que retorna o segundo maior elemento de uma lista
-- **5.** Faça uma função que entra em um record no formato do exemplo (abaixo) e retorna se a pessoa é maior de idade ou não
-- **6.** Altere o type person para incluir o e-mail. Faça uma função para verificar se um e-mail existe ou não no record.
-- **7.** Faça uma função que retorne todas as ocorrências de uma lista
+- **2.** Faça uma função que recebe uma tupla ponto (x,y) e retorna um texto indicando se x e y são iguais, x é maior ou y é maior.
+- **3.** Faça uma função que retorna a quantidade de elementos de uma lista
+- **4.** Faça uma função que retorna o maior elemento de uma lista
+- **5.** Faça uma função que retorna o segundo maior elemento de uma lista
+- **6.** Faça uma função que entra em um record no formato do exemplo (abaixo) e retorna se a pessoa é maior de idade ou não
+
+```python
+class Person:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+
+alice = Person(name="Alice", age=30)
+print(f"{alice.name} is {alice.age} years old")
+``` 
+
+- **7.** Altere o type person para incluir o e-mail. Faça uma função para verificar se um e-mail existe ou não no record.
+- **8.** Faça uma função que retorne todas as ocorrências de uma lista
+
+```ocaml
+update_all [1; 2; 3; 2; 4] 2 9 (* trocar todos os 2 por 9: [1; 9; 3; 9; 4] *)
+```
 
 ## Match
 
