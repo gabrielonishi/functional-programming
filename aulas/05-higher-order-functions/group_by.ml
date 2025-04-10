@@ -1,23 +1,33 @@
-type movies = {
-  id: int;
-  name: string;
-  genre: string;
-} ;;
+type order = { id : int; client_id : int; value : int }
 
-let mv1 = {id=1 ; name="Superbad"; genre="Comedy"} ;;
-let mv2 = {id=2 ; name="About Time"; genre="Romance"} ;;
-let mv3 = {id=3 ; name="Office Space"; genre="Comedy"} ;;
-let mv4 = {id=4 ; name="Alien"; genre="Thriller"} ;;
-let mv5 = {id=5 ; name="Psycho"; genre="Thriller"} ;;
-let mv6 = {id=6 ; name="Crazy, Stupid, Love"; genre="Comedy"} ;;
-let mv7 = {id=7 ; name="The Notebook"; genre="Romance"} ;;
+let order0 = { id = 0; client_id = 0; value = 10 }
+let order1 = { id = 1; client_id = 1; value = 20 }
+let order2 = { id = 2; client_id = 0; value = 30 }
+let data = [ order0; order1; order2 ]
 
-let db = [mv1; mv2; mv3; mv4; mv5; mv6; mv7] ;;
+module SameClientMap = Map.Make (Int)
 
-let group_by extract_keys_func extract_values_func aggr_func lst =
-  let map_db = StringMap.empty in
-  
+let group_by key_extractor value_extractor aggregate_handler data = 
+  List.fold_left
+    (fun map order ->
+      let group_key = key_extractor order in
+      let current_value = value_extractor order in
+      SameClientMap.update group_key
+        (function
+          | Some existing -> Some (aggregate_handler existing current_value)
+          | None -> Some current_value)
+        map)
+    SameClientMap.empty data
 
-let extract_name = (fun x -> x.name) ;;
-let extract_value = (fun x -> x.genre) ;;
+let t =
+  group_by
+    (fun (o : order) : int -> o.client_id)
+    (fun (o : order) : int -> o.value)
+    (fun (acc : int) (value : int) : int -> acc + value)
+    data
 
+let () =
+  SameClientMap.iter
+    (fun (key : int) (value : int) ->
+      Printf.printf "client_id: %d total: %d\n" key value)
+    t
